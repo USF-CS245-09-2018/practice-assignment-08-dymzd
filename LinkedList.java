@@ -61,21 +61,34 @@ public class LinkedList implements List {
     }
 	public Object remove(int pos) throws Exception{
         Node temp = head;
-        for(int i = 0; i <= pos-1; i++){
-            temp = temp.getNext();
-        }
-        Node after = null;
-        if(temp.getNext() != null){
-            after = temp.getNext();
-        }
-        Node before = temp.getPrev();
-        if(after == null){
-            before.setNext(null);
-            return temp;
-        } else {
-            before.setNext(after);
-            after.setPrev(before);
-        }
+
+        if(isEmpty() != true){
+            if(temp.getPrev() == temp.getNext()){
+                head = null;
+                return temp.getObject();
+            }
+
+            for(int i = 0; i <= pos-1; i++){
+                temp = temp.getNext();
+            }
+        
+            Node after = null;
+            Node before = temp.getPrev();
+            //IF THEER IS AFTER TAKE CARE OF IT
+            if(temp.getNext() != null){
+                after = temp.getNext();
+                after.setPrev(before);
+            }
+            //IF THERE IS NO AFTER 
+            if(after == null){
+                before.setNext(null);
+                return temp.getObject();
+            } else {
+                before.setNext(after);
+                after.setPrev(before);
+            }
+
+        }        
         return temp.getObject();
     }
 	public int size(){
